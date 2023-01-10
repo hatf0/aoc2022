@@ -53,14 +53,10 @@ impl FromStr for CratesStack {
             //     dst.push_front(src.pop_front().unwrap())
             // }
 
-            src.range(.. elems.0)
-               .rev()
-               .for_each(|x| {
-                dst.push_front(*x)
-              });
+            src.range(..elems.0).rev().for_each(|x| dst.push_front(*x));
 
-            for _ in 0 .. elems.0 {
-              src.pop_front();
+            for _ in 0..elems.0 {
+                src.pop_front();
             }
         }
 
@@ -75,7 +71,7 @@ fn main() {
         .stack
         .iter()
         .filter(|x| x.borrow().len() != 0)
-        .map(|x| x.borrow().front().unwrap().clone())
+        .map(|x| *x.borrow().front().unwrap())
         .collect();
     println!("{answer:?}");
 }
