@@ -1,6 +1,4 @@
-use std::{str::FromStr, result};
-
-use itertools::Itertools;
+use std::str::FromStr;
 
 #[derive(Debug, PartialEq, Eq)]
 struct Range(i32, i32);
@@ -20,11 +18,11 @@ impl Range {
 
     fn overlaps(&self, other: &Range) -> bool {
         if self.0 <= other.0 && other.0 <= self.1 {
-            return true
-        } 
-        
+            return true;
+        }
+
         if other.0 <= self.0 && self.0 <= other.1 {
-            return true
+            return true;
         }
 
         false
@@ -39,10 +37,7 @@ impl FromStr for Range {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let items: Vec<i32> = s.split('-').map(|x| x.parse::<i32>().unwrap()).collect();
-        Ok(Range(
-            items.get(0).unwrap().clone(),
-            items.get(1).unwrap().clone(),
-        ))
+        Ok(Range(*items.first().unwrap(), *items.get(1).unwrap()))
     }
 }
 
@@ -65,7 +60,10 @@ mod test {
 
 fn main() {
     let input = std::fs::read_to_string("./input").unwrap();
-    let chunks = input.split('\n').filter(|x| !x.is_empty()).map(|x| x.split(',').map(Range::from_str));
+    let chunks = input
+        .split('\n')
+        .filter(|x| !x.is_empty())
+        .map(|x| x.split(',').map(Range::from_str));
 
     let mut result_0 = 0;
     let mut result_1 = 0;
@@ -84,5 +82,4 @@ fn main() {
 
     println!("first answer: {result_0:?}");
     println!("second answer: {result_1:?}");
-
 }
