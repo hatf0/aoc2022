@@ -60,16 +60,16 @@ mod test {
 
 fn main() {
     let input = std::fs::read_to_string("./input").unwrap();
-    let chunks = input
+    let ranges = input
         .split('\n')
         .filter(|x| !x.is_empty())
         .map(|x| x.split(',').map(Range::from_str));
 
     let mut result_0 = 0;
     let mut result_1 = 0;
-    for mut chunk in chunks {
-        let first = chunk.next().unwrap().unwrap();
-        let second = chunk.next().unwrap().unwrap();
+    for mut range in ranges {
+        let first = range.next().unwrap().unwrap();
+        let second = range.next().unwrap().unwrap();
 
         if first.contained_within(&second) || second.contained_within(&first) {
             result_0 += 1;
